@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:todo_app/widget/cutom_text.dart';
-import 'package:todo_app/widget/task_container.dart';
 
-class ToDoList extends StatelessWidget {
+class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
 
   @override
+  State<ToDoList> createState() => _ToDoListState();
+}
+
+List<String> tasks = [];
+
+TextEditingController task = TextEditingController();
+
+class _ToDoListState extends State<ToDoList> {
+  @override
   Widget build(BuildContext context) {
-    List<String> tasks = [];
-
-    TextEditingController task = TextEditingController();
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 234, 216, 198),
@@ -27,10 +31,60 @@ class ToDoList extends StatelessWidget {
                   color: Colors.black,
                   text: "ToDo's",
                 ),
-                const Column(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    TaskContainer(
-                      taskName: "Task 1",
+                    SizedBox(
+                      height: 70.h,
+                      width: 85.w,
+                      child: ListView.builder(
+                        itemCount: tasks.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              Container(
+                                width: 85.w,
+                                height: 12.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.black87,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomText(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        text: tasks[index],
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(
+                                            () {
+                                              tasks.remove(tasks[index]);
+                                            },
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.check,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -62,7 +116,14 @@ class ToDoList extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (task.text.isNotEmpty) {
+                              setState(() {
+                                tasks.add(task.text);
+                                task.clear();
+                              });
+                            }
+                          },
                           icon: const Icon(Icons.add),
                         )
                       ],
