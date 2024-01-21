@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:todo_app/screen/todo_list.dart';
 
 void main() {
@@ -10,9 +11,13 @@ class ToDoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'To Do App',
-      home: ToDoList(),
+    return FlutterSizer(
+      builder: (context, orientation, screenType) {
+        return const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: ToDoList(),
+        );
+      },
     );
   }
 }
