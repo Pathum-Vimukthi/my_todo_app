@@ -5,7 +5,10 @@ import 'package:todo_app/widget/cutom_text.dart';
 class TaskContainer extends StatelessWidget {
   const TaskContainer({
     super.key,
+    required this.taskName,
   });
+
+  final String taskName;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +24,11 @@ class TaskContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CustomText(
+            CustomText(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,
-              text: 'Task 1',
+              text: taskName,
             ),
             IconButton(
               onPressed: () {},
